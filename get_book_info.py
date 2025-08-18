@@ -67,17 +67,3 @@ for i in range(total_books):
 print("fetching results...")
 time.sleep(3)
 print(books)
-
-book_md5 = input("Please input the md5: ")
-response = requests.get(f"https://annas-archive.org/md5/{book_md5}")
-
-soup = BeautifulSoup(response.content, 'html.parser')
-
-links = soup.find_all('a', href=True)
-for i in links:
-    if "member_codes?prefix=sha256:" in i["href"]:
-        dirty_sha256 = i.contents[0]
-        match = re.search(r"[a-f0-9]{64}", dirty_sha256)
-        if match:
-            hash_value = match.group()
-            print(hash_value)
